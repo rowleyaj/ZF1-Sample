@@ -21,7 +21,13 @@
           <controllersDirectory/>
           <formsDirectory enabled="false"/>
           <layoutsDirectory enabled="false"/>
-          <modelsDirectory/>
+          <modelsDirectory>
+            <dbTableDirectory>
+              <dbTableFile dbTableName="Cars"/>
+              <dbTableFile dbTableName="Makes"/>
+              <dbTableFile dbTableName="Models"/>
+            </dbTableDirectory>
+          </modelsDirectory>
           <servicesDirectory enabled="false"/>
           <viewsDirectory>
             <viewScriptsDirectory/>
