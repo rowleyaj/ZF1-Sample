@@ -1,0 +1,2 @@
+alias zf=vendor/zendframework/zendframework1/bin/zf.sh
+# Included to show alias of zf used during dev
