@@ -1,0 +1,9 @@
+{
+    "require": {
+        "zendframework/zendframework1": "1.12.*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "dev-master"
+    },
+    "minimum-stability": "dev"
+}
