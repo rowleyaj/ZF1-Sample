@@ -2,7 +2,7 @@
 <projectProfile type="default" version="1.12.4dev">
   <projectDirectory>
     <projectProfileFile filesystemName=".zfproject.xml"/>
-    <applicationDirectory classNamePrefix="Application_">
+    <applicationDirectory classNamePrefix="Cars_">
       <configsDirectory>
         <applicationConfigFile type="ini"/>
       </configsDirectory>
