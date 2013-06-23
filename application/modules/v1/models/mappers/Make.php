@@ -1,9 +1,7 @@
 <?php
 
-class V1_Model_MakeMapper
+class V1_Model_Mapper_Make extends V1_Model_Mapper_Abstract
 {
-    protected $_db_table;
-
     public function __construct()
     {
         $this->_db_table = new V1_Model_DbTable_Makes();
@@ -35,15 +33,7 @@ class V1_Model_MakeMapper
 
     public function getMakeById($id)
     {
-        // Use db_table to find make with $id
-        $result = $this->_db_table->find($id);
-
-        // Count results and if not found throw exception
-        if (count($result) == 0) {
-            throw new Exception ('make not found');
-        }
-
-        $row = $result->current();
+        $row = $this->_getById($id);
         $make =  new V1_Model_Make($row);
 
         return $make;
