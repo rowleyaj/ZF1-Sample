@@ -8,7 +8,7 @@ class V1_CarsController extends Zend_Rest_Controller
     public function init()
     {
         $this->_helper->viewRenderer->setNoRender(true);
-        $this->mapper = new V1_Model_CarMapper;
+        $this->mapper = new V1_Model_Mapper_Car;
         $this->id = $this->_getParam('id');
     }
 
