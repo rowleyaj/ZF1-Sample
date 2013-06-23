@@ -2,10 +2,14 @@
 
 class V1_CarsController extends Zend_Rest_Controller
 {
+    protected $mapper;
+    protected $id;
 
     public function init()
     {
         $this->_helper->viewRenderer->setNoRender(true);
+        $this->mapper = new V1_Model_CarMapper;
+        $this->id = $this->_getParam('id');
     }
 
     public function indexAction()
@@ -18,6 +22,9 @@ class V1_CarsController extends Zend_Rest_Controller
     {
         // v1/cars/:id
         // Display one car
+        $car = $this->mapper->getCarById($this->id);
+        $this->getResponse()->setBody(var_dump($car));
+        $this->getResponse()->setHttpResponseCode(200);
     }
 
     public function postAction()
@@ -43,6 +50,8 @@ class V1_CarsController extends Zend_Rest_Controller
     public function headAction()
     {
         // Return only headers for a request
+        // // v1/cars/:id
+        // Display one car
     }
 }
 
