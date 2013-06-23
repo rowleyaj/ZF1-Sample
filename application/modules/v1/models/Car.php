@@ -21,7 +21,7 @@ class V1_Model_Car
         }
     }
 
-    public function __set($name, $value);
+    public function __set($name, $value)
     {
         switch($name) {
             case 'id':
