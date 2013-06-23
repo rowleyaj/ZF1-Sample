@@ -39,7 +39,7 @@ class V1_Model_CarMapper
         // Use db_table to find car with $id
         $result = $this->_db_table->find($id);
 
-        // Cound results and if not found through exception
+        // Count results and if not found throw exception
         if (count($result) == 0) {
             throw new Exception ('Car not found');
         }
