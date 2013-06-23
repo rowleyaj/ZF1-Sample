@@ -12,7 +12,11 @@ class V1_Model_CarMapper
     public function save(V1_Model_Car $car)
     {
         $data = array(
-            // '' = $car->
+            'id' => $car->id,
+            'model_id' => $car->model_id,
+            'reg_number' => $car->reg_number,
+            'created_at' => $car->created_at,
+            'modified_at' => $car->modified_at
         );
 
         // Remove created_at to prevent modification
