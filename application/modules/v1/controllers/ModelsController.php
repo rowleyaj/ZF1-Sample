@@ -5,7 +5,7 @@ class V1_ModelsController extends Zend_Rest_Controller
 
     public function init()
     {
-        /* Initialize action controller here */
+        $this->_helper->viewRenderer->setNoRender(true);
     }
 
     public function indexAction()
