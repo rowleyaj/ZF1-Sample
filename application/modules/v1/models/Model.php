@@ -1,44 +1,18 @@
 <?php
 
-class V1_Model_Model
+class V1_Model_Model extends V1_Model_Abstract
 {
-    private $id;
-    private $make_id;
-    private $name;
-    private $created_at;
-    private $modified_at;
+    private $_make_id;
+    private $_name;
 
     public function __construct($row = null)
     {
         if (!is_null($row) and $row instanceof Zend_Db_Table_Row) {
-            $this->id = $row->id;
-            $this->make_id = $row->make_id;
-            $this->name = $row->name;
-            $this->created_at = $row->created_at;
-            $this->modified_at = $row->modified_at;
+            $this->_id = $row->id;
+            $this->_make_id = $row->make_id;
+            $this->_name = $row->name;
+            $this->_created_at = $row->created_at;
+            $this->_modified_at = $row->modified_at;
         }
-    }
-
-    public function __set($name, $value)
-    {
-        switch($name) {
-            case 'id':
-                if (!is_null($this->id)) {
-                    throw new Exception('Can not update id');
-                }
-                break;
-            case 'created_at':
-                if (!is_null($this->created_at)) {
-                    throw new Exception('Can not update created_at');
-                }
-                break;
-        }
-
-        $this->$name = $value;
-    }
-
-    public function __get($name)
-    {
-        return $this->$name;
     }
 }
