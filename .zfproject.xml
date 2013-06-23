@@ -40,6 +40,9 @@
             <modelFile modelName="CarMapper"/>
             <modelFile modelName="MakeMapper"/>
             <modelFile modelName="ModelMapper"/>
+            <modelFile modelName="Car"/>
+            <modelFile modelName="Make"/>
+            <modelFile modelName="Model"/>
           </modelsDirectory>
           <servicesDirectory enabled="false"/>
           <viewsDirectory>
