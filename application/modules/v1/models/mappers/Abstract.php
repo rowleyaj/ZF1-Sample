@@ -19,11 +19,23 @@ abstract class V1_Model_Mapper_Abstract
         return $row;
     }
 
-    protected function _getAll()
+    protected function _getAll($limit = 25, $offset = 0)
     {
-        $rowset = $this->_db_table->fetchAll();
+        $select = $this->_db_table
+            ->select()
+            ->limit(':limit', ':offset')
+            ->bind(array(
+                ':limit' => $limit,
+                ':offset' => $offset)
+            );
 
+        $rowset = $this->_db_table->fetchAll($select);
         return $rowset;
     }
 
+    protected function _deleteById($id)
+    {
+        $where = $this->_db_table->getAdapter()->quoteInto('id = ?', $id);
+        $this->_db_table->delete($where);
+    }
 }
