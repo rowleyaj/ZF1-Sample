@@ -57,7 +57,7 @@ class V1_CarsController extends Zend_Rest_Controller
 
         $json = Zend_Json::encode($car);
         $this->getResponse()->setBody($json);
-        $this->getResponse()->setHttpResponseCode(200);
+        $this->getResponse()->setHttpResponseCode(201);
 
     }
 
