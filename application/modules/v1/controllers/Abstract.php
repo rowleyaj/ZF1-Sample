@@ -5,6 +5,7 @@ abstract class V1_Controller_Abstract extends Zend_Rest_Controller
     protected $modelName;
     protected $mapper;
     protected $id;
+    protected $input;
     protected $data;
 
     public function init()
@@ -20,6 +21,7 @@ abstract class V1_Controller_Abstract extends Zend_Rest_Controller
         $this->modelName = $modelName;
 
         $this->id = $this->_getParam('id');
+        $this->input = $this->getRequest()->getRawBody();
     }
 
     public function postDispatch() {
@@ -36,5 +38,10 @@ abstract class V1_Controller_Abstract extends Zend_Rest_Controller
             'items' => $response);
 
         $this->_helper->json($this->data);
+    }
+
+    public function headAction()
+    {
+        // Return only headers for a request
     }
 }

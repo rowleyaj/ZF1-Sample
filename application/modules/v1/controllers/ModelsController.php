@@ -29,8 +29,7 @@ class V1_ModelsController extends V1_Controller_Abstract
         // v1/models
         // with data
         // Create a model
-        $rawBody = $this->getRequest()->getRawBody();
-        $data = Zend_Json::decode($rawBody);
+        $data = Zend_Json::decode($this->input);
 
         $model = new V1_Model_Model;
         $model->loadFromArray($data);
@@ -46,11 +45,9 @@ class V1_ModelsController extends V1_Controller_Abstract
         // v1/models/:id
         // with data
         // Update a model
-        $rawBody = $this->getRequest()->getRawBody();
-        $data = Zend_Json::decode($rawBody);
+        $data = Zend_Json::decode($this->input);
 
         $model = $this->mapper->getModelById($this->id);
-
         $model->loadFromArray($data);
         $model = $this->mapper->save($model);
 
@@ -65,12 +62,5 @@ class V1_ModelsController extends V1_Controller_Abstract
         $model = $this->mapper->deleteById($this->id);
         $this->data['meta'] = array('code' => 200);
         $this->data['response'] = array();
-    }
-
-    public function headAction()
-    {
-        // Return only headers for a request
-        // // v1/models/:id
-        // Display one model
     }
 }

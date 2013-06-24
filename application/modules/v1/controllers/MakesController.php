@@ -29,8 +29,7 @@ class V1_MakesController extends V1_Controller_Abstract
         // v1/makes
         // with data
         // Create a make
-        $rawBody = $this->getRequest()->getRawBody();
-        $data = Zend_Json::decode($rawBody);
+        $data = Zend_Json::decode($this->input);
 
         $make = new V1_Model_Make;
         $make->loadFromArray($data);
@@ -46,11 +45,9 @@ class V1_MakesController extends V1_Controller_Abstract
         // v1/makes/:id
         // with data
         // Update a make
-        $rawBody = $this->getRequest()->getRawBody();
-        $data = Zend_Json::decode($rawBody);
+        $data = Zend_Json::decode($this->input);
 
         $make = $this->mapper->getMakeById($this->id);
-
         $make->loadFromArray($data);
         $make = $this->mapper->save($make);
 
@@ -65,12 +62,5 @@ class V1_MakesController extends V1_Controller_Abstract
         $make = $this->mapper->deleteById($this->id);
         $this->data['meta'] = array('code' => 200);
         $this->data['response'] = array();
-    }
-
-    public function headAction()
-    {
-        // Return only headers for a request
-        // // v1/makes/:id
-        // Display one make
     }
 }
