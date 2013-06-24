@@ -41,7 +41,7 @@ abstract class V1_Model_Abstract
         }
     }
 
-    public function toJson()
+    public function toArray()
     {
         $array = (array) $this;
         $class = get_called_class();
@@ -53,13 +53,6 @@ abstract class V1_Model_Abstract
             $array[$key] = $value;
         }
 
-        $json = '{';
-        foreach ($array as $key => $value) {
-            $json .= "\"$key\": \"$value\",";
-        }
-        $json = trim($json, ',');
-        $json .= '}';
-
-        return $json;
+        return $array;
     }
 }
