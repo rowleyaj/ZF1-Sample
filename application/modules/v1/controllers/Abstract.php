@@ -23,6 +23,18 @@ abstract class V1_Controller_Abstract extends Zend_Rest_Controller
     }
 
     public function postDispatch() {
+        $this->getResponse()
+             ->setHttpResponseCode($this->data['meta']['code']);
+
+        $lpmodel = strtolower($this->modelName);
+        $response = $this->data['response'];
+        unset($this->data['response']);
+
+        $count = count($response);
+        $this->data['response'][$lpmodel.'s'] = array(
+            'count' => $count,
+            'items' => $response);
+
         $this->_helper->json($this->data);
     }
 }
