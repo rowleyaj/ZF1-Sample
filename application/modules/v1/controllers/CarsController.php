@@ -16,6 +16,19 @@ class V1_CarsController extends Zend_Rest_Controller
     {
         // v1/cars/
         // Display all cars
+        $cars = $this->mapper->getAllCars();
+
+        $json = '{ "response":[';
+        foreach ($cars as $car) {
+            $json .= Zend_Json::encode($car);
+            $json .= ',';
+        }
+        $json = trim($json, ',');
+        $json .= ']}';
+
+        $this->getResponse()->setBody($json);
+        $this->getResponse()->setHttpResponseCode(200);
+
     }
 
     public function getAction()
@@ -23,7 +36,10 @@ class V1_CarsController extends Zend_Rest_Controller
         // v1/cars/:id
         // Display one car
         $car = $this->mapper->getCarById($this->id);
-        $this->getResponse()->setBody(var_dump($car));
+
+        $json = Zend_Json::encode($car);
+
+        $this->getResponse()->setBody($json);
         $this->getResponse()->setHttpResponseCode(200);
     }
 
@@ -32,6 +48,17 @@ class V1_CarsController extends Zend_Rest_Controller
         // v1/cars
         // with data
         // Create a car
+        $rawBody = $this->getRequest()->getRawBody();
+        $data = Zend_Json::decode($rawBody);
+
+        $car = new V1_Model_Car;
+        $car->loadFromArray($data);
+        $car = $this->mapper->save($car);
+
+        $json = Zend_Json::encode($car);
+        $this->getResponse()->setBody($json);
+        $this->getResponse()->setHttpResponseCode(200);
+
     }
 
     public function putAction()
@@ -39,12 +66,25 @@ class V1_CarsController extends Zend_Rest_Controller
         // v1/cars/:id
         // with data
         // Update a car
+        $rawBody = $this->getRequest()->getRawBody();
+        $data = Zend_Json::decode($rawBody);
+
+        $car = $this->mapper->getCarById($this->id);
+
+        $car->loadFromArray($data);
+        $car = $this->mapper->save($car);
+
+        $json = Zend_Json::encode($car);
+        $this->getResponse()->setBody($json);
+        $this->getResponse()->setHttpResponseCode(200);
     }
 
     public function deleteAction()
     {
         // v1/cars/:id
         // Delete a car
+        $car = $this->mapper->deleteById($this->id);
+        $this->getResponse()->setHttpResponseCode(204);
     }
 
     public function headAction()
@@ -54,4 +94,3 @@ class V1_CarsController extends Zend_Rest_Controller
         // Display one car
     }
 }
-
