@@ -37,14 +37,15 @@ class ErrorController extends Zend_Controller_Action
             default:
                 // application error
                 $code = $errors->exception->getCode();
-                if (!is_null($code)) {
+                if (!is_null($code) and $code != 0) {
                     $this->getResponse()->setHttpResponseCode($code);
                     $priority = Zend_Log::NOTICE;
+                    $this->view->message = $errors->exception->getMessage();
                 } else {
                     $this->getResponse()->setHttpResponseCode(500);
                     $priority = Zend_Log::CRIT;
+                    $this->view->message = 'Application Error';
                 }
-                $this->view->message = $errors->exception->getMessage();
                 break;
         }
 
