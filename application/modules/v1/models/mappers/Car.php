@@ -9,12 +9,15 @@ class V1_Model_Mapper_Car extends V1_Model_Mapper_Abstract
 
     public function save(V1_Model_Car $car)
     {
+        $data = array();
+
         $data = array(
-            'id' => $car->id,
-            'model_id' => $car->model_id,
-            'reg_number' => $car->reg_number,
-            'created_at' => $car->created_at,
-            'modified_at' => $car->modified_at
+            'id' => (int) $car->_id,
+            'model_id' => (int) $car->_model_id,
+            'production_year' => $car->_production_year,
+            'reg_number' => $car->_reg_number,
+            'created_at' => $car->_created_at,
+            'modified_at' => $car->_modified_at
         );
 
         // Remove created_at to prevent modification
@@ -22,14 +25,26 @@ class V1_Model_Mapper_Car extends V1_Model_Mapper_Abstract
             unset($data['created_at']);
         }
 
-        if (is_null($car->id)) {
-            $data['created_at'] = date('Y-m-d H:i:s');
-            $data['modified_at'] = date('Y-m-d H:i:s');
+        if (is_null($car->_id)) {
+            date_default_timezone_set('UTC');
+            $now = date('Y-m-d H:i:s');
+            $data['created_at'] = $now;
+            $data['modified_at'] = $now;
             $this->_db_table->insert($data);
+            $id = $this->_db_table->getAdapter()->lastInsertId();
+            $car->_id = $id;
+            $car->_created_at = $now;
+            $car->_modified_at = $now;
+
         } else {
-            $data['modified_at'] = date('Y-m-d H:i:s');
-            $this->_db_table->update($data, array('id =?' => $car->id));
+            date_default_timezone_set('UTC');
+            $now = date('Y-m-d H:i:s');
+            $data['modified_at'] = $now;
+            $this->_db_table->update($data, array('id =?' => $car->_id));
+            $car->_modified_at = $now;
         }
+
+        return $car;
     }
 
     public function getCarById($id)
@@ -48,9 +63,8 @@ class V1_Model_Mapper_Car extends V1_Model_Mapper_Abstract
         foreach ($rowset as $row) {
             $cars[] = new V1_Model_Car($row);
         }
+
+        return $cars;
     }
-
-
-
 }
 
