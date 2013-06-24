@@ -16,9 +16,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $front = Zend_Controller_Front::getInstance();
 
         $router = $front->getRouter();
-        $route = new Zend_Rest_Route($front, array(), array('v1'));
 
-        $router->addRoute('v1', $route);
+        $restroute = new Zend_Rest_Route($front, array(), array('v1'));
+        $router->addRoute('v1', $restroute);
     }
 
     public function _initAutoload()
