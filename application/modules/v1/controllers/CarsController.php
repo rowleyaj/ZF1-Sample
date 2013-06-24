@@ -8,17 +8,10 @@ class V1_CarsController extends V1_Controller_Abstract
         // Display all cars
         $cars = $this->mapper->getAllCars();
 
-        $json = '{ "response":[';
+        $this->data['meta']['code'] = 200;
         foreach ($cars as $car) {
-            $json .= Zend_Json::encode($car);
-            $json .= ',';
+            $this->data['response'][] = $car->toArray();
         }
-        $json = trim($json, ',');
-        $json .= ']}';
-
-        $this->getResponse()->setBody($json);
-        $this->getResponse()->setHttpResponseCode(200);
-
     }
 
     public function getAction()
@@ -27,10 +20,8 @@ class V1_CarsController extends V1_Controller_Abstract
         // Display one car
         $car = $this->mapper->getCarById($this->id);
 
-        $json = Zend_Json::encode($car);
-
-        $this->getResponse()->setBody($json);
-        $this->getResponse()->setHttpResponseCode(200);
+        $this->data['meta']['code'] = 200;
+        $this->data['response'][] = $car->toArray();
     }
 
     public function postAction()
@@ -45,9 +36,8 @@ class V1_CarsController extends V1_Controller_Abstract
         $car->loadFromArray($data);
         $car = $this->mapper->save($car);
 
-        $json = Zend_Json::encode($car);
-        $this->getResponse()->setBody($json);
-        $this->getResponse()->setHttpResponseCode(201);
+        $this->data['meta']['code'] = 201;
+        $this->data['response'][] = $car->toArray();
 
     }
 
@@ -64,9 +54,8 @@ class V1_CarsController extends V1_Controller_Abstract
         $car->loadFromArray($data);
         $car = $this->mapper->save($car);
 
-        $json = Zend_Json::encode($car);
-        $this->getResponse()->setBody($json);
-        $this->getResponse()->setHttpResponseCode(200);
+        $this->data['meta']['code'] = 200;
+        $this->data['response'][] = $car->toArray();
     }
 
     public function deleteAction()
@@ -74,7 +63,8 @@ class V1_CarsController extends V1_Controller_Abstract
         // v1/cars/:id
         // Delete a car
         $car = $this->mapper->deleteById($this->id);
-        $this->getResponse()->setHttpResponseCode(204);
+        $this->data['meta'] = array('code' => 200);
+        $this->data['response'] = array();
     }
 
     public function headAction()

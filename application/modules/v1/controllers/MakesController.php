@@ -8,17 +8,10 @@ class V1_MakesController extends V1_Controller_Abstract
         // Display all makes
         $makes = $this->mapper->getAllMakes();
 
-        $json = '{ "response":[';
+        $this->data['meta']['code'] = 200;
         foreach ($makes as $make) {
-            $json .= Zend_Json::encode($make);
-            $json .= ',';
+            $this->data['response'][] = $make->toArray();
         }
-        $json = trim($json, ',');
-        $json .= ']}';
-
-        $this->getResponse()->setBody($json);
-        $this->getResponse()->setHttpResponseCode(200);
-
     }
 
     public function getAction()
@@ -27,10 +20,8 @@ class V1_MakesController extends V1_Controller_Abstract
         // Display one make
         $make = $this->mapper->getMakeById($this->id);
 
-        $json = Zend_Json::encode($make);
-
-        $this->getResponse()->setBody($json);
-        $this->getResponse()->setHttpResponseCode(200);
+        $this->data['meta']['code'] = 200;
+        $this->data['response'][] = $make->toArray();
     }
 
     public function postAction()
@@ -45,9 +36,8 @@ class V1_MakesController extends V1_Controller_Abstract
         $make->loadFromArray($data);
         $make = $this->mapper->save($make);
 
-        $json = Zend_Json::encode($make);
-        $this->getResponse()->setBody($json);
-        $this->getResponse()->setHttpResponseCode(201);
+        $this->data['meta']['code'] = 201;
+        $this->data['response'][] = $make->toArray();
 
     }
 
@@ -64,9 +54,8 @@ class V1_MakesController extends V1_Controller_Abstract
         $make->loadFromArray($data);
         $make = $this->mapper->save($make);
 
-        $json = Zend_Json::encode($make);
-        $this->getResponse()->setBody($json);
-        $this->getResponse()->setHttpResponseCode(200);
+        $this->data['meta']['code'] = 200;
+        $this->data['response'][] = $make->toArray();
     }
 
     public function deleteAction()
@@ -74,7 +63,8 @@ class V1_MakesController extends V1_Controller_Abstract
         // v1/makes/:id
         // Delete a make
         $make = $this->mapper->deleteById($this->id);
-        $this->getResponse()->setHttpResponseCode(204);
+        $this->data['meta'] = array('code' => 200);
+        $this->data['response'] = array();
     }
 
     public function headAction()

@@ -8,17 +8,10 @@ class V1_ModelsController extends V1_Controller_Abstract
         // Display all models
         $models = $this->mapper->getAllModels();
 
-        $json = '{ "response":[';
+        $this->data['meta']['code'] = 200;
         foreach ($models as $model) {
-            $json .= Zend_Json::encode($model);
-            $json .= ',';
+            $this->data['response'][] = $model->toArray();
         }
-        $json = trim($json, ',');
-        $json .= ']}';
-
-        $this->getResponse()->setBody($json);
-        $this->getResponse()->setHttpResponseCode(200);
-
     }
 
     public function getAction()
@@ -27,10 +20,8 @@ class V1_ModelsController extends V1_Controller_Abstract
         // Display one model
         $model = $this->mapper->getModelById($this->id);
 
-        $json = Zend_Json::encode($model);
-
-        $this->getResponse()->setBody($json);
-        $this->getResponse()->setHttpResponseCode(200);
+        $this->data['meta']['code'] = 200;
+        $this->data['response'][] = $model->toArray();
     }
 
     public function postAction()
@@ -45,9 +36,8 @@ class V1_ModelsController extends V1_Controller_Abstract
         $model->loadFromArray($data);
         $model = $this->mapper->save($model);
 
-        $json = Zend_Json::encode($model);
-        $this->getResponse()->setBody($json);
-        $this->getResponse()->setHttpResponseCode(201);
+        $this->data['meta']['code'] = 201;
+        $this->data['response'][] = $model->toArray();
 
     }
 
@@ -64,9 +54,8 @@ class V1_ModelsController extends V1_Controller_Abstract
         $model->loadFromArray($data);
         $model = $this->mapper->save($model);
 
-        $json = Zend_Json::encode($model);
-        $this->getResponse()->setBody($json);
-        $this->getResponse()->setHttpResponseCode(200);
+        $this->data['meta']['code'] = 200;
+        $this->data['response'][] = $model->toArray();
     }
 
     public function deleteAction()
@@ -74,7 +63,8 @@ class V1_ModelsController extends V1_Controller_Abstract
         // v1/models/:id
         // Delete a model
         $model = $this->mapper->deleteById($this->id);
-        $this->getResponse()->setHttpResponseCode(204);
+        $this->data['meta'] = array('code' => 200);
+        $this->data['response'] = array();
     }
 
     public function headAction()
