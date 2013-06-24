@@ -39,4 +39,14 @@ class V1_Model_Mapper_Make extends V1_Model_Mapper_Abstract
         return $make;
     }
 
+    public function getAllMakes()
+    {
+        $rowset = $this->_getAll();
+        $makes = array();
+
+        foreach ($rowset as $row) {
+            $makes[] = new V1_Model_Make($row);
+        }
+    }
+
 }

@@ -19,4 +19,11 @@ abstract class V1_Model_Mapper_Abstract
         return $row;
     }
 
+    protected function _getAll()
+    {
+        $rowset = $this->_db_table->fetchAll();
+
+        return $rowset;
+    }
+
 }

@@ -40,5 +40,17 @@ class V1_Model_Mapper_Car extends V1_Model_Mapper_Abstract
         return $car;
     }
 
+    public function getAllCars()
+    {
+        $rowset = $this->_getAll();
+        $cars = array();
+
+        foreach ($rowset as $row) {
+            $cars[] = new V1_Model_Car($row);
+        }
+    }
+
+
+
 }
 

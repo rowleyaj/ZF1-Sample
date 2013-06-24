@@ -40,4 +40,13 @@ class V1_Model_Mapper_Model extends V1_Model_Mapper_Abstract
         return $model;
     }
 
+    public function getAllModels()
+    {
+        $rowset = $this->_getAll();
+        $models = array();
+
+        foreach ($rowset as $row) {
+            $models[] = new V1_Model_Model($row);
+        }
+    }
 }
