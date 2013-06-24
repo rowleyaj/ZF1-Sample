@@ -33,7 +33,7 @@ abstract class V1_Model_Mapper_Abstract
         return $rowset;
     }
 
-    protected function _deleteById($id)
+    public function deleteById($id)
     {
         $where = $this->_db_table->getAdapter()->quoteInto('id = ?', $id);
         $this->_db_table->delete($where);
