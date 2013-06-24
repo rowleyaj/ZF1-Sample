@@ -2,9 +2,9 @@
 
 class V1_Model_Car extends V1_Model_Abstract
 {
-    private $_model_id;
-    private $_production_year;
-    private $_reg_number;
+    protected $_model_id;
+    protected $_production_year;
+    protected $_reg_number;
 
     public function __construct($row = null)
     {
