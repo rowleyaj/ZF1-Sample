@@ -51,6 +51,11 @@ class V1_Model_Mapper_Car extends V1_Model_Mapper_Abstract
     {
         $row = $this->_getById($id);
         $car =  new V1_Model_Car($row);
+        $model = $row->findParentRow('V1_Model_DbTable_Models');
+        $make = $model->findParentRow('V1_Model_DbTable_Makes');
+
+        $car->model = $model->toArray();
+        $car->make = $make->toArray();
 
         return $car;
     }

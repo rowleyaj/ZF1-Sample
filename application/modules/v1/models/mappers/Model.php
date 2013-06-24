@@ -49,7 +49,10 @@ class V1_Model_Mapper_Model extends V1_Model_Mapper_Abstract
     public function getModelById($id)
     {
         $row = $this->_getById($id);
-        $model =  new V1_Model_Model($row);
+        $model = new V1_Model_Model($row);
+        $make = $row->findParentRow('V1_Model_DbTable_Makes');
+
+        $model->make = $make->toArray();
 
         return $model;
     }
