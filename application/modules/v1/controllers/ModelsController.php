@@ -1,6 +1,6 @@
 <?php
 
-class V1_ModelsController extends Zend_Rest_Controller
+class V1_ModelsController extends V1_Controller_Abstract
 {
     protected $mapper;
     protected $id;

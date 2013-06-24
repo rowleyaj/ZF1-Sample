@@ -27,6 +27,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             'basePath'  => APPLICATION_PATH . '/modules/v1',
             'namespace' => 'V1'
         ));
+
+        $moduleLoader->addResourceType('controller', 'controllers/', 'Controller');
     }
 }
 
