@@ -11,7 +11,7 @@ abstract class V1_Model_Mapper_Abstract
 
         // Count results and if not found throw exception
         if (count($result) == 0) {
-            throw new Exception ('Not found');
+            throw new Zend_Exception('Item Not found', 404);
         }
 
         $row = $result->current();
