@@ -5,6 +5,7 @@ abstract class V1_Controller_Abstract extends Zend_Rest_Controller
     protected $modelName;
     protected $mapper;
     protected $id;
+    protected $data;
 
     public function init()
     {
@@ -19,5 +20,9 @@ abstract class V1_Controller_Abstract extends Zend_Rest_Controller
         $this->modelName = $modelName;
 
         $this->id = $this->_getParam('id');
+    }
+
+    public function postDispatch() {
+        $this->_helper->json($this->data);
     }
 }
