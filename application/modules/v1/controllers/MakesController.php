@@ -2,16 +2,6 @@
 
 class V1_MakesController extends V1_Controller_Abstract
 {
-    protected $mapper;
-    protected $id;
-
-    public function init()
-    {
-        $this->_helper->viewRenderer->setNoRender(true);
-        $this->mapper = new V1_Model_Mapper_Make;
-        $this->id = $this->_getParam('id');
-    }
-
     public function indexAction()
     {
         // v1/makes/
