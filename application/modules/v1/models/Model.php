@@ -2,8 +2,8 @@
 
 class V1_Model_Model extends V1_Model_Abstract
 {
-    private $_make_id;
-    private $_name;
+    protected $_make_id;
+    protected $_name;
 
     public function __construct($row = null)
     {

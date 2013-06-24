@@ -9,12 +9,14 @@ class V1_Model_Mapper_Model extends V1_Model_Mapper_Abstract
 
     public function save(V1_Model_Model $model)
     {
+        $data = array();
+
         $data = array(
-            'id' => $model->id,
-            'make_id' => $model->make_id,
-            'name' => $model->model_id,
-            'created_at' => $model->created_at,
-            'modified_at' => $model->modified_at
+            'id' => (int) $model->_id,
+            'make_id' => (int) $model->_make_id,
+            'name' => $model->_name,
+            'created_at' => $model->_created_at,
+            'modified_at' => $model->_modified_at
         );
 
         // Remove created_at to prevent modification
@@ -22,14 +24,26 @@ class V1_Model_Mapper_Model extends V1_Model_Mapper_Abstract
             unset($data['created_at']);
         }
 
-        if (is_null($model->id)) {
-            $data['created_at'] = date('Y-m-d H:i:s');
-            $data['modified_at'] = date('Y-m-d H:i:s');
+        if (is_null($model->_id)) {
+            date_default_timezone_set('UTC');
+            $now = date('Y-m-d H:i:s');
+            $data['created_at'] = $now;
+            $data['modified_at'] = $now;
             $this->_db_table->insert($data);
+            $id = $this->_db_table->getAdapter()->lastInsertId();
+            $model->_id = $id;
+            $model->_created_at = $now;
+            $model->_modified_at = $now;
+
         } else {
-            $data['modified_at'] = date('Y-m-d H:i:s');
-            $this->_db_table->update($data, array('id =?' => $model->id));
+            date_default_timezone_set('UTC');
+            $now = date('Y-m-d H:i:s');
+            $data['modified_at'] = $now;
+            $this->_db_table->update($data, array('id =?' => $model->_id));
+            $model->_modified_at = $now;
         }
+
+        return $model;
     }
 
     public function getModelById($id)
@@ -48,5 +62,7 @@ class V1_Model_Mapper_Model extends V1_Model_Mapper_Abstract
         foreach ($rowset as $row) {
             $models[] = new V1_Model_Model($row);
         }
+
+        return $models;
     }
 }
