@@ -9,11 +9,13 @@ class V1_Model_Mapper_Make extends V1_Model_Mapper_Abstract
 
     public function save(V1_Model_Make $make)
     {
+        $data = array();
+
         $data = array(
-            'id' => $make->id,
-            'name' => $make->model_id,
-            'created_at' => $make->created_at,
-            'modified_at' => $make->modified_at
+            'id' => (int) $make->_id,
+            'name' => $make->_name,
+            'created_at' => $make->_created_at,
+            'modified_at' => $make->_modified_at
         );
 
         // Remove created_at to prevent modification
@@ -21,14 +23,26 @@ class V1_Model_Mapper_Make extends V1_Model_Mapper_Abstract
             unset($data['created_at']);
         }
 
-        if (is_null($make->id)) {
-            $data['created_at'] = date('Y-m-d H:i:s');
-            $data['modified_at'] = date('Y-m-d H:i:s');
+        if (is_null($make->_id)) {
+            date_default_timezone_set('UTC');
+            $now = date('Y-m-d H:i:s');
+            $data['created_at'] = $now;
+            $data['modified_at'] = $now;
             $this->_db_table->insert($data);
+            $id = $this->_db_table->getAdapter()->lastInsertId();
+            $make->_id = $id;
+            $make->_created_at = $now;
+            $make->_modified_at = $now;
+
         } else {
-            $data['modified_at'] = date('Y-m-d H:i:s');
-            $this->_db_table->update($data, array('id =?' => $make->id));
+            date_default_timezone_set('UTC');
+            $now = date('Y-m-d H:i:s');
+            $data['modified_at'] = $now;
+            $this->_db_table->update($data, array('id =?' => $make->_id));
+            $make->_modified_at = $now;
         }
+
+        return $make;
     }
 
     public function getMakeById($id)
@@ -47,6 +61,8 @@ class V1_Model_Mapper_Make extends V1_Model_Mapper_Abstract
         foreach ($rowset as $row) {
             $makes[] = new V1_Model_Make($row);
         }
-    }
 
+        return $makes;
+    }
 }
+
